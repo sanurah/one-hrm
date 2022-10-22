@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  app:
+    image: 'sanurah/one-hrm'
+    build:
+      context: .
+    container_name: app
+    depends_on:
+      - db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/one-hrm
+      - SPRING_DATASOURCE_USERNAME=one-hrm-user
+      - SPRING_DATASOURCE_PASSWORD=one-hrm-passwrord
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    ports:
+      - "8080:8080"
+
+  db:
+    image: 'postgres:15-alpine'
+    container_name: db
+    environment:
+      - POSTGRES_DB=one-hrm
+      - POSTGRES_USER=one-hrm-user
+      - POSTGRES_PASSWORD=one-hrm-passwrord
