@@ -26,16 +26,20 @@ import org.springframework.security.oauth2.server.authorization.config.ProviderS
 import org.springframework.security.oauth2.server.authorization.config.TokenSettings;
 import org.springframework.security.web.SecurityFilterChain;
 
-@Configuration(proxyBeanMethods = false)
+@Configuration
 public class AuthenticationServerConfig {
 
     @Autowired
-    PasswordEncoder passwordEncoder;
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private CorsCustomizer corsCustomizer;
 
     @Bean
     @Order(Ordered.HIGHEST_PRECEDENCE)
     public SecurityFilterChain authSecurityFilterChain(HttpSecurity http) throws Exception {
         OAuth2AuthorizationServerConfiguration.applyDefaultSecurity(http);
+        corsCustomizer.corsCustomizer(http);
         return http.formLogin(Customizer.withDefaults()).build();
     }
 
@@ -47,7 +51,7 @@ public class AuthenticationServerConfig {
                 .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
                 .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
                 .authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
-                .redirectUri("http://127.0.0.1:8080/authorized")
+                .redirectUri("http://127.0.0.1:3000/authorized")
                 .scope(OidcScopes.OPENID)
                 .clientSettings(ClientSettings.builder()
                         .requireAuthorizationConsent(true).build())

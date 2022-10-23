@@ -13,10 +13,14 @@ import org.springframework.security.web.SecurityFilterChain;
 public class WebSecurityConfig {
 
     @Autowired
-    AuthenticationProvider authenticationProvider;
+    private AuthenticationProvider authenticationProvider;
+
+    @Autowired
+    private CorsCustomizer corsCustomizer;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        corsCustomizer.corsCustomizer(http);
         return http
                 .authorizeRequests(authorizeRequests -> authorizeRequests.anyRequest().authenticated())
                 .formLogin(Customizer.withDefaults()).build();
