@@ -1,9 +1,13 @@
-FROM amazoncorretto:17-alpine
+FROM amazoncorretto:17-alpine AS one-hrm-app
 RUN addgroup -S one-hrm && adduser -S one-hrm -G one-hrm
 USER one-hrm:one-hrm
+ARG JAR_FILE1=app-0.0.1-SNAPSHOT.jar
+COPY ${JAR_FILE1} app.jar
+ENTRYPOINT ["java","-jar","app.jar"]
 
-ARG JAR_FILE=one-1.0-SNAPSHOT.jar
-
-COPY ${JAR_FILE} one.jar
-
-ENTRYPOINT ["java","-jar","one.jar"]
+FROM amazoncorretto:17-alpine AS one-hrm-auth
+RUN addgroup -S one-hrm && adduser -S one-hrm -G one-hrm
+USER one-hrm:one-hrm
+ARG JAR_FILE2=auth-0.0.1-SNAPSHOT.jar
+COPY ${JAR_FILE2} auth.jar
+ENTRYPOINT ["java","-jar","auth.jar"]
