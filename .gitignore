@@ -40,6 +40,8 @@ hs_err_pid*
 *.iml
 *.ipr
 
+node/
+
 #System
 .DS_Store
 
