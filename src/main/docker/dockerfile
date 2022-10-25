@@ -1,9 +1,0 @@
-FROM amazoncorretto:17-alpine
-RUN addgroup -S one-hrm && adduser -S one-hrm -G one-hrm
-USER one-hrm:one-hrm
-
-ARG JAR_FILE=one-1.0-SNAPSHOT.jar
-
-COPY ${JAR_FILE} one.jar
-
-ENTRYPOINT ["java","-jar","one.jar"]

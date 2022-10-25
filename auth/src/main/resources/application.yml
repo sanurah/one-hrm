@@ -1,5 +1,6 @@
 server:
-  port: 8080
+  port: 9000
+
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/one-hrm
@@ -14,7 +15,3 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQL94Dialect
     hibernate:
       ddl-auto: update
-
-  sql:
-    init:
-      mode: always
