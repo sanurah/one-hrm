@@ -21,8 +21,12 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class UserService implements UserDetailsService {
 
-    @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {

@@ -13,11 +13,14 @@ import org.springframework.stereotype.Service;
 @Service
 public class AuthenticationProvider implements org.springframework.security.authentication.AuthenticationProvider {
 
-    @Autowired
     private UserDetailsService userDetailsService;
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
-    private PasswordEncoder passwordEncoder;
+    public AuthenticationProvider(UserDetailsService userDetailsService, PasswordEncoder passwordEncoder) {
+        this.userDetailsService = userDetailsService;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
@@ -33,7 +36,7 @@ public class AuthenticationProvider implements org.springframework.security.auth
     }
 
     private UsernamePasswordAuthenticationToken getAuthenticationToken(UserDetails userDetails, String password) {
-        if (userDetails != null || passwordEncoder.matches(userDetails.getPassword(), password)) {
+        if (userDetails != null && passwordEncoder.matches(password, userDetails.getPassword())) {
             return new UsernamePasswordAuthenticationToken(
                     userDetails.getUsername(),
                     userDetails.getPassword(),

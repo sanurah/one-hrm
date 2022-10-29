@@ -14,7 +14,3 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQL94Dialect
     hibernate:
       ddl-auto: update
-
-  sql:
-    init:
-      mode: always

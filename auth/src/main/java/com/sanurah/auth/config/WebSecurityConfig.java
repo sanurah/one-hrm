@@ -12,11 +12,14 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class WebSecurityConfig {
 
-    @Autowired
     private AuthenticationProvider authenticationProvider;
+    private CorsCustomizer corsCustomizer;
 
     @Autowired
-    private CorsCustomizer corsCustomizer;
+    public WebSecurityConfig(AuthenticationProvider authenticationProvider, CorsCustomizer corsCustomizer) {
+        this.authenticationProvider = authenticationProvider;
+        this.corsCustomizer = corsCustomizer;
+    }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {

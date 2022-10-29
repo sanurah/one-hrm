@@ -8,6 +8,13 @@ import {AuthComponent} from './auth/auth.component';
 import {HomeComponent} from './home/home.component';
 import {HttpClientModule} from '@angular/common/http';
 import {LoginComponent} from './login/login.component';
+import {MatInputModule} from '@angular/material/input';
+import {MatButtonModule} from '@angular/material/button';
+import {MatSelectModule} from '@angular/material/select';
+import {MatRadioModule} from '@angular/material/radio';
+import {MatCardModule} from '@angular/material/card';
+import {ReactiveFormsModule} from '@angular/forms';
+import {MatGridListModule} from "@angular/material/grid-list";
 
 @NgModule({
   declarations: [AppComponent, AuthComponent, HomeComponent, LoginComponent],
@@ -16,6 +23,13 @@ import {LoginComponent} from './login/login.component';
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    MatInputModule,
+    MatButtonModule,
+    MatSelectModule,
+    MatRadioModule,
+    MatCardModule,
+    ReactiveFormsModule,
+    MatGridListModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
