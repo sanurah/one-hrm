@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { redirectUrl } from '../constants/redirect';
+import {Component, OnInit} from '@angular/core';
+import {redirectUrl} from '../constants/redirect';
 
 @Component({
   selector: 'app-login',
@@ -7,11 +7,13 @@ import { redirectUrl } from '../constants/redirect';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
-  constructor() {}
+  constructor() {
+  }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+  }
 
   redirect(): void {
-    window.location.href = redirectUrl;
+    window.location.href = redirectUrl();
   }
 }
