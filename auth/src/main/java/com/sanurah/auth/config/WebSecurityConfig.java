@@ -3,7 +3,6 @@ package com.sanurah.auth.config;
 import com.sanurah.auth.service.AuthenticationProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -26,7 +25,15 @@ public class WebSecurityConfig {
         corsCustomizer.corsCustomizer(http);
         return http
                 .authorizeRequests(authorizeRequests -> authorizeRequests.anyRequest().authenticated())
-                .formLogin(Customizer.withDefaults()).build();
+                .formLogin()
+                .loginPage("http://127.0.0.1:4200/login")
+                .permitAll()
+                .and()
+                .build();
+
+//        return http
+//                .authorizeRequests(authorizeRequests -> authorizeRequests.anyRequest().authenticated())
+//                .formLogin(Customizer.withDefaults()).build();
     }
 
     @Autowired
