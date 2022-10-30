@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {take} from 'rxjs/operators';
 import {AuthService} from '../service/auth.service';
+import {SessionConstant} from "../constants/session.constant";
 
 @Component({
   selector: 'app-auth',
@@ -23,11 +24,12 @@ export class AuthComponent implements OnInit {
       console.log("token:::::", tokens);
 
       if ((tokens as any)?.id_token) {
-        sessionStorage.setItem('id_token', (tokens as any)?.id_token);
+        sessionStorage.setItem(SessionConstant.ID_TOKEN, (tokens as any)?.id_token);
+        this.authService.setLoggedIn(true);
       }
 
       if ((tokens as any)?.refresh_token) {
-        sessionStorage.setItem('refresh_token', (tokens as any)?.refresh_token);
+        sessionStorage.setItem(SessionConstant.REFRESH_TOKEN, (tokens as any)?.refresh_token);
       }
     });
   }

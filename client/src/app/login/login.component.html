@@ -1,1 +1,22 @@
-<button (click)='redirect()'>Login</button>
+<div class="container">
+  <form [formGroup]="form" class="inner-container">
+
+    <mat-form-field appearance="outline">
+      <mat-label>Email</mat-label>
+      <input formControlName="username" matInput placeholder="Enter Email">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Password</mat-label>
+      <input formControlName="password" matInput placeholder="Enter Password" [type]="hide ? 'password' : 'text'">
+      <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+              [attr.aria-pressed]="hide">
+        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+      </button>
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" (click)="submit()">Login</button>
+
+    <a mat-button href="https://www.google.com/" target="_blank">Forgot your password?</a>
+  </form>
+</div>

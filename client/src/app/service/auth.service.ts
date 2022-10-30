@@ -2,8 +2,7 @@ import {HttpHeaders} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {HttpService} from './http.service';
-import {tokenUrl} from '../constants/token';
-import {Buffer} from 'buffer';
+import {tokenUrl} from '../constants/token.constant';
 
 @Injectable({
   providedIn: 'root',
@@ -11,22 +10,28 @@ import {Buffer} from 'buffer';
 export class AuthService {
 
   private code: string = '';
+  private isLoggedIn: boolean = false;
 
   constructor(private httpService: HttpService) {
   }
 
-  setCode(code: string) {
+  setCode(code: string): void {
     this.code = code;
   }
 
-  getCode() {
+  getCode(): string {
     return this.code;
   }
 
+  getLoggedIn(): boolean {
+    return this.isLoggedIn;
+  }
+
+  setLoggedIn(loggedIn: boolean): void {
+    this.isLoggedIn = loggedIn;
+  }
+
   getToken(code: string): Observable<Object> {
-    const clientId = 'client';
-    const clientSecret = 'secret';
-    const basicAuth = 'Basic ' + Buffer.from(`${clientId}:${clientSecret}`);
     const headers: HttpHeaders = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': 'Basic Y2xpZW50OnNlY3JldA==',
