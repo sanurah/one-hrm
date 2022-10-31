@@ -3,6 +3,8 @@ import {ActivatedRoute} from '@angular/router';
 import {take} from 'rxjs/operators';
 import {AuthService} from '../service/auth.service';
 import {SessionConstant} from "../constants/session.constant";
+import {HttpService} from "../service/http.service";
+import {HttpHeaders} from "@angular/common/http";
 
 @Component({
   selector: 'app-auth',
@@ -11,7 +13,7 @@ import {SessionConstant} from "../constants/session.constant";
 })
 export class AuthComponent implements OnInit {
 
-  constructor(private authService: AuthService, private activatedRoute: ActivatedRoute) {
+  constructor(private authService: AuthService, private activatedRoute: ActivatedRoute, private httpService: HttpService) {
     this.setAuthorizationCode();
   }
 
@@ -39,8 +41,22 @@ export class AuthComponent implements OnInit {
       if (params?.['code']) {
         this.authService.setCode(params['code']);
         console.log('code =====', this.authService.getCode());
+        this.getDemoInformation();
       }
     });
+  }
+
+  private getDemoInformation() {
+    const token = sessionStorage.getItem('id_token');
+    const bearerToken = `Bearer ${token}`;
+    const options = {
+      headers: new HttpHeaders({'Authorization': bearerToken}),
+      responseType: 'text/plain'
+    };
+
+    this.httpService.doGet("http://localhost:8080/api/v1/user/4", options).pipe(take(1)).subscribe((content) => {
+      console.log("yooo", content);
+    })
   }
 
 }

@@ -32,11 +32,14 @@ export class LoginComponent implements OnInit {
   submit() {
     console.log(this.form.getRawValue());
 
-    const headers: HttpHeaders = new HttpHeaders();
+    const headers: HttpHeaders = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Basic Y2xpZW50OnNlY3JldA==',
+    });
     const options = {
       headers: headers
     }
-    this.httpService.doPost("http://localhost:9000/login", this.form.getRawValue(), options);
+    this.httpService.doPost("http://localhost:9000/login", this.form.getRawValue(), options).subscribe();
   }
 
   redirect(): void {

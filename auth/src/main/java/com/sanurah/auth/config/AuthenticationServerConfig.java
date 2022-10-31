@@ -29,18 +29,18 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 public class AuthenticationServerConfig {
 
-    @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-    private CorsCustomizer corsCustomizer;
+    public AuthenticationServerConfig(PasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
+    }
 
     @Bean
     @Order(Ordered.HIGHEST_PRECEDENCE)
     public SecurityFilterChain authSecurityFilterChain(HttpSecurity http) throws Exception {
         OAuth2AuthorizationServerConfiguration.applyDefaultSecurity(http);
-        corsCustomizer.corsCustomizer(http);
-        return http.formLogin(Customizer.withDefaults()).build();
+        return http.cors(Customizer.withDefaults()).formLogin().and().build();
     }
 
     @Bean
