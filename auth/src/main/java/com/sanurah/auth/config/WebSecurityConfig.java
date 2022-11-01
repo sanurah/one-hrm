@@ -28,8 +28,15 @@ public class WebSecurityConfig {
                 .cors(Customizer.withDefaults())
                 .authorizeRequests(authorizeRequests -> authorizeRequests.anyRequest().authenticated())
                 .formLogin()
-                //.loginPage("http://127.0.0.1:4200/login")
+                .loginPage("/login")
+                .failureUrl("/login?error")
                 .permitAll()
+                .and()
+                .logout()
+                .deleteCookies("JSESSIONID")
+                .and()
+                .rememberMe()
+                .key("9inS*^i52AJD")
                 .and()
                 .build();
     }

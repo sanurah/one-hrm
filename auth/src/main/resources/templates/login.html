@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <title>Login</title>
+</head>
+<body clas="text-center" style="background-color: hsl(0, 0%, 96%)">
+<section>
+
+  <div class="px-4 py-5 px-md-5 text-center text-lg-start" style="background-color: hsl(0, 0%, 96%)">
+    <div class="container">
+      <div class="row gx-lg-5 align-items-center">
+        <div class="col-lg-6 mb-5 mb-lg-0">
+          <h1 class="my-5 display-3 fw-bold ls-tight" style="color: #1e81b0!important;">
+            One-Hrm<br/>
+            <span class="text-primary"
+                  style="color: #063970!important;"> Number 1 Employee Management System</span>
+          </h1>
+          <p style="color: hsl(217, 10%, 50.8%)">
+            One place fo all your human resource management needs. Over 100 companies
+            large to medium scale are using our solutions. One place to apply for leaves,
+            attend your trainings. Find out organizational hierachy and much more.
+          </p>
+        </div>
+
+        <div class="col-lg-6 mb-5 mb-lg-0">
+          <div class="card">
+            <div class="card-body py-5 px-md-5">
+              <form name="f" th:action="@{/login}" method="post">
+                <fieldset>
+
+                  <div th:if="${param.error}" class="alert alert-danger" role="alert">
+                    Unable to authorize the user
+                  </div>
+
+                  <div th:if="${param.logout}" class="alert alert-success" role="alert">
+                    You have been logged out
+                  </div>
+
+                  <div class="form-outline mb-4">
+                    <label class="form-label" for="username">Email address</label>
+                    <input type="text" id="username" name="username" autofocus="autofocus" class="form-control"/>
+                  </div>
+                  <div class="form-outline mb-4">
+                    <label class="form-label" for="password">Password</label>
+                    <input type="password" id="password" name="password" class="form-control"/>
+                  </div>
+                  <div class="form-check d-flex mb-4">
+                    <input class="form-check-input me-2" type="checkbox" value="" id="remember-me" name="remember-me"/>
+                    <label class="form-check-label" for="remember-me">
+                      Remember Me
+                    </label>
+                  </div>
+
+                  <button type="submit" class="btn btn-primary btn-block mb-4"
+                          style="background-color: #063970!important;">LogIn
+                  </button>
+                </fieldset>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</body>
+</html>
