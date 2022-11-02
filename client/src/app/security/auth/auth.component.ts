@@ -1,10 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {take} from 'rxjs/operators';
-import {AuthService} from '../service/auth.service';
-import {SessionConstant} from "../constants/session.constant";
-import {HttpService} from "../service/http.service";
-import {HttpHeaders} from "@angular/common/http";
+import {AuthService} from '../../service/auth.service';
+import {SessionConstant} from "../../constants/session.constant";
 
 @Component({
   selector: 'app-auth',
@@ -13,7 +11,7 @@ import {HttpHeaders} from "@angular/common/http";
 })
 export class AuthComponent implements OnInit {
 
-  constructor(private authService: AuthService, private activatedRoute: ActivatedRoute, private httpService: HttpService) {
+  constructor(private authService: AuthService, private activatedRoute: ActivatedRoute, private router: Router) {
     this.setAuthorizationCode();
   }
 
@@ -34,6 +32,7 @@ export class AuthComponent implements OnInit {
         sessionStorage.setItem(SessionConstant.REFRESH_TOKEN, (tokens as any)?.refresh_token);
       }
     });
+    this.router.navigate(["/home"]).then(r => console.log("went home"));
   }
 
   setAuthorizationCode() {
@@ -41,22 +40,8 @@ export class AuthComponent implements OnInit {
       if (params?.['code']) {
         this.authService.setCode(params['code']);
         console.log('code =====', this.authService.getCode());
-        this.getDemoInformation();
       }
     });
-  }
-
-  private getDemoInformation() {
-    const token = sessionStorage.getItem('id_token');
-    const bearerToken = `Bearer ${token}`;
-    const options = {
-      headers: new HttpHeaders({'Authorization': bearerToken}),
-      responseType: 'text/plain'
-    };
-
-    this.httpService.doGet("http://localhost:8080/api/v1/user/4", options).pipe(take(1)).subscribe((content) => {
-      console.log("yooo", content);
-    })
   }
 
 }
