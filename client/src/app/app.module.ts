@@ -15,9 +15,10 @@ import {MatCardModule} from '@angular/material/card';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatGridListModule} from "@angular/material/grid-list";
 import {MatIconModule} from "@angular/material/icon";
+import { EmployeeComponent } from './employee/employee.component';
 
 @NgModule({
-  declarations: [AppComponent, AuthComponent, HomeComponent],
+  declarations: [AppComponent, AuthComponent, HomeComponent, EmployeeComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
