@@ -9,26 +9,26 @@ import {tokenUrl} from '../constants/token.constant';
 })
 export class AuthService {
 
-  private code: string = '';
-  private isLoggedIn: boolean = false;
+  private _code: string = '';
+  private _isLoggedIn: boolean = false;
 
   constructor(private httpService: HttpService) {
   }
 
-  setCode(code: string): void {
-    this.code = code;
+  set code(code: string) {
+    this._code = code;
   }
 
-  getCode(): string {
-    return this.code;
+  get code(): string {
+    return this._code;
   }
 
-  getLoggedIn(): boolean {
-    return this.isLoggedIn;
+  get isLoggedIn(): boolean {
+    return this._isLoggedIn;
   }
 
-  setLoggedIn(loggedIn: boolean): void {
-    this.isLoggedIn = loggedIn;
+  set isLoggedIn(isLoggedIn: boolean) {
+    this._isLoggedIn = isLoggedIn;
   }
 
   getToken(code: string): Observable<Object> {

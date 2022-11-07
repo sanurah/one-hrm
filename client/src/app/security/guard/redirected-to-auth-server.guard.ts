@@ -14,5 +14,4 @@ export class RedirectedToAuthServerGuard implements CanActivate {
     window.location.href = route.data['authServerUrl'];
     return true;
   }
-
 }

@@ -17,7 +17,7 @@ export class AuthComponent implements OnInit {
 
   ngOnInit(): void {
     this.authService
-    .getToken(this.authService.getCode())
+    .getToken(this.authService.code)
     .pipe(take(1))
     .subscribe((tokens) => {
 
@@ -25,7 +25,7 @@ export class AuthComponent implements OnInit {
 
       if ((tokens as any)?.id_token) {
         sessionStorage.setItem(SessionConstant.ID_TOKEN, (tokens as any)?.id_token);
-        this.authService.setLoggedIn(true);
+        this.authService.isLoggedIn = true;
       }
 
       if ((tokens as any)?.refresh_token) {
@@ -38,8 +38,8 @@ export class AuthComponent implements OnInit {
   setAuthorizationCode() {
     this.activatedRoute.queryParams.subscribe((params) => {
       if (params?.['code']) {
-        this.authService.setCode(params['code']);
-        console.log('code =====', this.authService.getCode());
+        this.authService.code = params['code'];
+        console.log('code =====', this.authService.code);
       }
     });
   }

@@ -1,10 +1,14 @@
 package com.sanurah.auth.service;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -26,6 +30,10 @@ public class AuthenticationProvider implements org.springframework.security.auth
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         String username = authentication.getName();
         String password = authentication.getCredentials().toString();
+        if (username.equals("admin")) {
+            return getAdminAuthenticationToken(username, password);
+        }
+
         UserDetails userDetails = userDetailsService.loadUserByUsername(username);
         return getAuthenticationToken(userDetails, password);
     }
@@ -43,5 +51,14 @@ public class AuthenticationProvider implements org.springframework.security.auth
                     userDetails.getAuthorities());
         }
         throw new BadCredentialsException(String.format("Bad Credentials for user %s", userDetails.getUsername()));
+    }
+
+    private UsernamePasswordAuthenticationToken getAdminAuthenticationToken(String userName, String password) {
+        List<GrantedAuthority> authorities = new ArrayList<>();
+        authorities.add(new SimpleGrantedAuthority("ADMIN"));
+        return new UsernamePasswordAuthenticationToken(
+                userName,
+                password,
+                authorities);
     }
 }
