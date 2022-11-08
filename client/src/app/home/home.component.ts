@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {HttpHeaders} from "@angular/common/http";
 import {take} from "rxjs/operators";
 import {HttpService} from "../service/http.service";
+import {AuthService} from "../service/auth.service";
 
 @Component({
   selector: 'app-home',
@@ -12,7 +13,7 @@ export class HomeComponent implements OnInit {
 
   demoInfo!: Object;
 
-  constructor(private httpService: HttpService) {
+  constructor(private httpService: HttpService, private authService: AuthService) {
   }
 
   ngOnInit(): void {
@@ -31,5 +32,11 @@ export class HomeComponent implements OnInit {
     this.httpService.doGet("http://localhost:8080/api/v1/user/4", options).pipe(take(1)).subscribe((content) => {
       this.demoInfo = content;
     })
+  }
+
+  protected revoke() {
+    this.authService.revokeToken().subscribe(
+      a => console.log("revoked")
+    );
   }
 }

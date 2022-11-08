@@ -1,8 +1,9 @@
 import {HttpHeaders} from '@angular/common/http';
 import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs';
+import {EMPTY, Observable} from 'rxjs';
 import {HttpService} from './http.service';
 import {tokenUrl} from '../constants/token.constant';
+import {SessionConstant} from "../constants/session.constant";
 
 @Injectable({
   providedIn: 'root',
@@ -40,5 +41,25 @@ export class AuthService {
       headers: headers,
     };
     return this.httpService.doPost(tokenUrl(code), null, options);
+  }
+
+  revokeToken(): Observable<Object> {
+    const token = sessionStorage.getItem(SessionConstant.ID_TOKEN);
+    if (token != null) {
+      const headers: HttpHeaders = new HttpHeaders({
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Authorization': 'Basic Y2xpZW50OnNlY3JldA==',
+      });
+      const options = {
+        headers: headers,
+      };
+
+      let body = new URLSearchParams({
+        'token': token
+      });
+
+      return this.httpService.doPost("http://localhost:9000/oauth2/revoke", body.toString(), options);
+    }
+    return EMPTY;
   }
 }

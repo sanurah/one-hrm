@@ -21,15 +21,15 @@ export class AuthComponent implements OnInit {
     .pipe(take(1))
     .subscribe((tokens) => {
 
-      console.log("token:::::", tokens);
-
       if ((tokens as any)?.id_token) {
         sessionStorage.setItem(SessionConstant.ID_TOKEN, (tokens as any)?.id_token);
+        console.log("token::: ", sessionStorage.getItem(SessionConstant.ID_TOKEN));
         this.authService.isLoggedIn = true;
       }
 
       if ((tokens as any)?.refresh_token) {
         sessionStorage.setItem(SessionConstant.REFRESH_TOKEN, (tokens as any)?.refresh_token);
+        console.log("refresh-token::: ", sessionStorage.getItem(SessionConstant.REFRESH_TOKEN));
       }
     });
     this.router.navigate(["/home"]).then(r => console.log("went home"));
@@ -39,7 +39,6 @@ export class AuthComponent implements OnInit {
     this.activatedRoute.queryParams.subscribe((params) => {
       if (params?.['code']) {
         this.authService.code = params['code'];
-        console.log('code =====', this.authService.code);
       }
     });
   }
