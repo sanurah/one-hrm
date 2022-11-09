@@ -4,6 +4,7 @@ import {EMPTY, Observable} from 'rxjs';
 import {HttpService} from './http.service';
 import {tokenUrl} from '../constants/token.constant';
 import {SessionConstant} from "../constants/session.constant";
+import {environment} from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -58,7 +59,27 @@ export class AuthService {
         'token': token
       });
 
-      return this.httpService.doPost("http://localhost:9000/oauth2/revoke", body.toString(), options);
+      return this.httpService.doPost(environment.authServer + '/oauth2/revoke', body.toString(), options);
+    }
+    return EMPTY;
+  }
+
+  tokenStatus() {
+    const token = sessionStorage.getItem(SessionConstant.ID_TOKEN);
+    if (token != null) {
+      const headers: HttpHeaders = new HttpHeaders({
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Authorization': 'Basic Y2xpZW50OnNlY3JldA==',
+      });
+      const options = {
+        headers: headers,
+      };
+
+      let body = new URLSearchParams({
+        'token': token
+      });
+
+      return this.httpService.doPost(environment.authServer + '/oauth2/introspect', body.toString(), options);
     }
     return EMPTY;
   }

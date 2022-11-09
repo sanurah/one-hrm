@@ -36,7 +36,13 @@ export class HomeComponent implements OnInit {
 
   protected revoke() {
     this.authService.revokeToken().subscribe(
-      a => console.log("revoked")
+      a => console.log("revoked", a)
     );
+  }
+
+  protected checkToken() {
+    this.authService.tokenStatus().subscribe(
+      a => console.log("status", a)
+    )
   }
 }
