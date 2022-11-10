@@ -23,7 +23,7 @@ export class AuthComponent implements OnInit {
 
       if ((tokens as any)?.id_token) {
         sessionStorage.setItem(SessionConstant.ID_TOKEN, (tokens as any)?.id_token);
-        console.log("token::: ", sessionStorage.getItem(SessionConstant.ID_TOKEN));
+        console.log("id_token::: ", sessionStorage.getItem(SessionConstant.ID_TOKEN));
         this.authService.isLoggedIn = true;
       }
 

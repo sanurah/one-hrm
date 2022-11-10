@@ -15,10 +15,12 @@ import {MatCardModule} from '@angular/material/card';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatGridListModule} from "@angular/material/grid-list";
 import {MatIconModule} from "@angular/material/icon";
-import { EmployeeComponent } from './employee/employee.component';
+import {EmployeeComponent} from './employee/employee.component';
+import {MatToolbarModule} from "@angular/material/toolbar";
+import { NavbarComponent } from './navbar/navbar.component';
 
 @NgModule({
-  declarations: [AppComponent, AuthComponent, HomeComponent, EmployeeComponent],
+  declarations: [AppComponent, AuthComponent, HomeComponent, EmployeeComponent, NavbarComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -33,6 +35,7 @@ import { EmployeeComponent } from './employee/employee.component';
     MatGridListModule,
     MatIconModule,
     FormsModule,
+    MatToolbarModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
