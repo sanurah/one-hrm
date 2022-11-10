@@ -18,9 +18,10 @@ import {MatIconModule} from "@angular/material/icon";
 import {EmployeeComponent} from './employee/employee.component';
 import {MatToolbarModule} from "@angular/material/toolbar";
 import { NavbarComponent } from './navbar/navbar.component';
+import { EmployeesComponent } from './employees/employees.component';
 
 @NgModule({
-  declarations: [AppComponent, AuthComponent, HomeComponent, EmployeeComponent, NavbarComponent],
+  declarations: [AppComponent, AuthComponent, HomeComponent, EmployeeComponent, NavbarComponent, EmployeesComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
