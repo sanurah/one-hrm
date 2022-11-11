@@ -2,11 +2,13 @@ package com.sanurah.app.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import java.util.UUID;
 
 @JsonInclude(Include.NON_NULL)
 public class UserModel {
 
     private Long id;
+    private UUID uuid;
     private String email;
     private String password;
     private String matchPassword;
@@ -16,13 +18,22 @@ public class UserModel {
     public UserModel() {
     }
 
-    public UserModel(Long id, String email, String password, String matchPassword, String role, Boolean verified) {
+    public UserModel(Long id, UUID uuid, String email, String password, String matchPassword, String role,
+            Boolean verified) {
         this.id = id;
         this.email = email;
         this.password = password;
         this.matchPassword = matchPassword;
         this.role = role;
         this.verified = verified;
+    }
+
+    public UUID getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(UUID uuid) {
+        this.uuid = uuid;
     }
 
     public Long getId() {
