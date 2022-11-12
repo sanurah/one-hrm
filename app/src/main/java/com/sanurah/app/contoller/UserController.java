@@ -24,15 +24,18 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1/user")
 public class UserController {
 
-    @Autowired
     UserService userService;
-
-    @Autowired
     ApplicationEventPublisher publisher;
 
+    @Autowired
+    public UserController(UserService userService, ApplicationEventPublisher publisher) {
+        this.userService = userService;
+        this.publisher = publisher;
+    }
+
     @PostMapping
-    public ResponseEntity<UserModel> registerUser(@RequestBody UserModel user, final HttpServletRequest request) {
-        UserModel registeredUser = userService.registerUser(user);
+    public ResponseEntity<UserModel> createUser(@RequestBody UserModel user, final HttpServletRequest request) {
+        UserModel registeredUser = userService.createUser(user);
         URI uri = getApplicationUri(request);
         publisher.publishEvent(new SendVerificationTokenEvent(registeredUser, uri));
         return ResponseEntity.created(uri).body(registeredUser);

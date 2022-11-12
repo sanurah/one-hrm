@@ -9,31 +9,14 @@ public class UserModel {
 
     private Long id;
     private UUID uuid;
-    private String email;
+    private String username;
     private String password;
     private String matchPassword;
     private String role;
     private Boolean verified;
+    private Boolean active;
 
     public UserModel() {
-    }
-
-    public UserModel(Long id, UUID uuid, String email, String password, String matchPassword, String role,
-            Boolean verified) {
-        this.id = id;
-        this.email = email;
-        this.password = password;
-        this.matchPassword = matchPassword;
-        this.role = role;
-        this.verified = verified;
-    }
-
-    public UUID getUuid() {
-        return uuid;
-    }
-
-    public void setUuid(UUID uuid) {
-        this.uuid = uuid;
     }
 
     public Long getId() {
@@ -44,12 +27,20 @@ public class UserModel {
         this.id = id;
     }
 
-    public String getEmail() {
-        return email;
+    public UUID getUuid() {
+        return uuid;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setUuid(UUID uuid) {
+        this.uuid = uuid;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
@@ -82,5 +73,13 @@ public class UserModel {
 
     public void setVerified(Boolean verified) {
         this.verified = verified;
+    }
+
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
     }
 }

@@ -11,20 +11,13 @@ public class User extends BaseEntity {
 
     private UUID uuid;
     @Column(unique = true, nullable = false)
-    private String email;
+    private String username;
     private String password;
     private String role;
     private Boolean verified;
+    private Boolean active;
 
     public User() {
-    }
-
-    public User(UUID uuid, String email, String password, String role, Boolean verified) {
-        this.uuid = uuid;
-        this.email = email;
-        this.password = password;
-        this.role = role;
-        this.verified = verified;
     }
 
     public UUID getUuid() {
@@ -35,12 +28,12 @@ public class User extends BaseEntity {
         this.uuid = uuid;
     }
 
-    public String getEmail() {
-        return email;
+    public String getUsername() {
+        return username;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
@@ -65,5 +58,13 @@ public class User extends BaseEntity {
 
     public void setVerified(boolean verified) {
         this.verified = verified;
+    }
+
+    public Boolean isActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
     }
 }

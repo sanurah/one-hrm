@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -18,17 +19,22 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserServiceImpl implements UserService {
 
-    @Autowired
     private UserRepository userRepository;
-
-    @Autowired
     private PasswordEncoder passwordEncoder;
+    private VerificationTokenService verificationTokenService;
+    private ModelMapper modelMapper;
 
     @Autowired
-    private VerificationTokenService verificationTokenService;
+    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder,
+            VerificationTokenService verificationTokenService, ModelMapper modelMapper) {
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+        this.verificationTokenService = verificationTokenService;
+        this.modelMapper = modelMapper;
+    }
 
     @Override
-    public UserModel registerUser(UserModel userModel) {
+    public UserModel createUser(UserModel userModel) {
         User user = map(userModel);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setVerified(false);
@@ -101,25 +107,15 @@ public class UserServiceImpl implements UserService {
     }
 
     private User map(UserModel userModel) {
-        User user = new User();
-        user.setId(userModel.getId());
-        user.setEmail(userModel.getEmail());
-        user.setRole(userModel.getRole());
-
+        User user = modelMapper.map(userModel, User.class);
         if (userModel.getPassword() != null) {
             String encodedPassword = passwordEncoder.encode(userModel.getPassword());
             user.setPassword(encodedPassword);
         }
-
         return user;
     }
 
     private UserModel map(User user) {
-        UserModel userModel = new UserModel();
-        userModel.setId(user.getId());
-        userModel.setEmail(user.getEmail());
-        userModel.setRole(user.getRole());
-        userModel.setVerified(user.isVerified());
-        return userModel;
+        return modelMapper.map(user, UserModel.class);
     }
 }

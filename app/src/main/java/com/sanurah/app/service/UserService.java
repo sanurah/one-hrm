@@ -8,7 +8,7 @@ import java.util.UUID;
 
 public interface UserService {
 
-    UserModel registerUser(UserModel user);
+    UserModel createUser(UserModel user);
 
     List<UserModel> getUsers();
 
