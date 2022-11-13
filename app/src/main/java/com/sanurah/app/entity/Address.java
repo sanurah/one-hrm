@@ -5,15 +5,31 @@ import javax.persistence.MappedSuperclass;
 @MappedSuperclass
 public class Address extends BaseEntity {
 
+    private String buildingNumber;
+    private String apartmentNumber;
     private String street;
     private String city;
     private String state;
     private String postalCode;
-    private String buildingNumber;
-    private String apartmentNumber;
     private String country;
 
     public Address() {
+    }
+
+    public String getBuildingNumber() {
+        return buildingNumber;
+    }
+
+    public void setBuildingNumber(String buildingNumber) {
+        this.buildingNumber = buildingNumber;
+    }
+
+    public String getApartmentNumber() {
+        return apartmentNumber;
+    }
+
+    public void setApartmentNumber(String apartmentNumber) {
+        this.apartmentNumber = apartmentNumber;
     }
 
     public String getStreet() {
@@ -46,22 +62,6 @@ public class Address extends BaseEntity {
 
     public void setPostalCode(String postalCode) {
         this.postalCode = postalCode;
-    }
-
-    public String getBuildingNumber() {
-        return buildingNumber;
-    }
-
-    public void setBuildingNumber(String buildingNumber) {
-        this.buildingNumber = buildingNumber;
-    }
-
-    public String getApartmentNumber() {
-        return apartmentNumber;
-    }
-
-    public void setApartmentNumber(String apartmentNumber) {
-        this.apartmentNumber = apartmentNumber;
     }
 
     public String getCountry() {
