@@ -7,7 +7,6 @@ import com.sanurah.app.model.UserModel;
 import com.sanurah.app.service.UserService;
 import java.net.URI;
 import java.util.List;
-import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
@@ -17,7 +16,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -39,20 +37,6 @@ public class UserController {
         URI uri = getApplicationUri(request);
         publisher.publishEvent(new SendVerificationTokenEvent(registeredUser, uri));
         return ResponseEntity.created(uri).body(registeredUser);
-    }
-
-    @GetMapping("/verification/verify")
-    public ResponseEntity<UserModel> verifyUser(@RequestParam UUID token) throws OneBusinessException {
-        UserModel user = userService.verifyUser(token);
-        return ResponseEntity.ok().body(user);
-    }
-
-    @GetMapping("/verification/resend")
-    public ResponseEntity resendUserVerificationToken(@RequestParam UUID token, final HttpServletRequest request)
-            throws OneBusinessException {
-        UserModel userModel = userService.resendVerificationToken(token);
-        publisher.publishEvent(new SendVerificationTokenEvent(userModel, getApplicationUri(request)));
-        return ResponseEntity.accepted().build();
     }
 
     @GetMapping("/all")

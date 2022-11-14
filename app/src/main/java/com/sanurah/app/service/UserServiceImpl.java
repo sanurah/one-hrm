@@ -2,14 +2,12 @@ package com.sanurah.app.service;
 
 import com.google.common.base.Strings;
 import com.sanurah.app.entity.User;
-import com.sanurah.app.entity.VerificationToken;
 import com.sanurah.app.exception.EntityNotFoundException;
 import com.sanurah.app.exception.OneBusinessException;
 import com.sanurah.app.model.UserModel;
 import com.sanurah.app.repository.UserRepository;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 import java.util.stream.Collectors;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,15 +19,12 @@ public class UserServiceImpl implements UserService {
 
     private UserRepository userRepository;
     private PasswordEncoder passwordEncoder;
-    private VerificationTokenService verificationTokenService;
     private ModelMapper modelMapper;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder,
-            VerificationTokenService verificationTokenService, ModelMapper modelMapper) {
+    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder, ModelMapper modelMapper) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
-        this.verificationTokenService = verificationTokenService;
         this.modelMapper = modelMapper;
     }
 
@@ -63,15 +58,8 @@ public class UserServiceImpl implements UserService {
         return map(user.get());
     }
 
-    public VerificationToken createUserVerificationToken(UserModel userModel, UUID token) {
+    public UserModel verifyUser(UserModel userModel) throws OneBusinessException {
         User user = map(userModel);
-        return verificationTokenService.createVerificationToken(user, token);
-    }
-
-    public UserModel verifyUser(UUID token) throws OneBusinessException {
-
-        VerificationToken verificationToken = verificationTokenService.deleteVerificationToken(token);
-        User user = verificationToken.getUser();
         user.setVerified(true);
         user = userRepository.save(user);
 
@@ -90,12 +78,6 @@ public class UserServiceImpl implements UserService {
         return map(user);
     }
 
-    public UserModel resendVerificationToken(UUID oldToken) throws OneBusinessException {
-        VerificationToken verificationToken = verificationTokenService.deleteVerificationToken(oldToken);
-        User user = verificationToken.getUser();
-        return map(user);
-    }
-
     private void verifyPasswordMatch(UserModel userModel) throws OneBusinessException {
         String password = userModel.getPassword();
         String matchPassword = userModel.getMatchPassword();
@@ -106,7 +88,7 @@ public class UserServiceImpl implements UserService {
         throw new OneBusinessException("Please check that passwords match and are not empty");
     }
 
-    private User map(UserModel userModel) {
+    protected User map(UserModel userModel) {
         User user = modelMapper.map(userModel, User.class);
         if (userModel.getPassword() != null) {
             String encodedPassword = passwordEncoder.encode(userModel.getPassword());
@@ -115,7 +97,7 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
-    private UserModel map(User user) {
+    protected UserModel map(User user) {
         return modelMapper.map(user, UserModel.class);
     }
 }

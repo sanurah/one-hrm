@@ -1,7 +1,7 @@
 package com.sanurah.app.listner;
 
 import com.sanurah.app.event.SendPasswordResetEvent;
-import com.sanurah.app.service.UserService;
+import com.sanurah.app.service.VerificationTokenService;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
@@ -9,12 +9,12 @@ import org.springframework.context.ApplicationListener;
 public class SendPasswordResetEventListener implements ApplicationListener<SendPasswordResetEvent> {
 
     @Autowired
-    private UserService userService;
+    private VerificationTokenService verificationTokenService;
 
     @Override
     public void onApplicationEvent(SendPasswordResetEvent event) {
         UUID token = UUID.randomUUID();
-        userService.createUserVerificationToken(event.getUser(), token);
+        verificationTokenService.createVerificationToken(event.getUser(), token);
         sendEmail(event.getApplicationUrl().toString(), token);
     }
 

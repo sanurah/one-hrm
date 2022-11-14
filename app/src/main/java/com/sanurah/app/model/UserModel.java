@@ -2,6 +2,7 @@ package com.sanurah.app.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.sanurah.app.constants.Role;
 import java.util.UUID;
 
 @JsonInclude(Include.NON_NULL)
@@ -12,7 +13,7 @@ public class UserModel {
     private String username;
     private String password;
     private String matchPassword;
-    private String role;
+    private Role role;
     private Boolean verified;
     private Boolean active;
 
@@ -59,11 +60,11 @@ public class UserModel {
         this.matchPassword = matchPassword;
     }
 
-    public String getRole() {
+    public Role getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(Role role) {
         this.role = role;
     }
 

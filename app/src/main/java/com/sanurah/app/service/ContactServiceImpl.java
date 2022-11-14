@@ -22,11 +22,11 @@ public class ContactServiceImpl {
         return map(contactRepository.save(contact));
     }
 
-    public ContactModel map(Contact contact) {
+    private ContactModel map(Contact contact) {
         return modelMapper.map(contact, ContactModel.class);
     }
 
-    public Contact map(ContactModel contactModel) {
+    private Contact map(ContactModel contactModel) {
         return modelMapper.map(contactModel, Contact.class);
     }
 }

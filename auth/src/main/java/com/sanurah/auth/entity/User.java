@@ -1,5 +1,6 @@
 package com.sanurah.auth.entity;
 
+import com.sanurah.auth.constants.Role;
 import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,18 +14,11 @@ public class User extends BaseEntity {
     @Column(unique = true, nullable = false)
     private String username;
     private String password;
-    private String role;
+    private Role role;
     private Boolean verified;
+    private Boolean active;
 
     public User() {
-    }
-
-    public User(UUID uuid, String username, String password, String role, Boolean verified) {
-        this.uuid = uuid;
-        this.username = username;
-        this.password = password;
-        this.role = role;
-        this.verified = verified;
     }
 
     public UUID getUuid() {
@@ -51,11 +45,11 @@ public class User extends BaseEntity {
         this.password = password;
     }
 
-    public String getRole() {
+    public Role getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(Role role) {
         this.role = role;
     }
 

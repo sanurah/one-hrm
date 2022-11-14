@@ -32,9 +32,11 @@ public class ContactServiceTests {
     }
 
     @Test
-    public void mapContactModel() {
-        Contact contact = getContact();
-        ContactModel contactModel = contactService.map(contact);
+    public void createContact() {
+        ContactModel contactModel = getContactModel();
+        contactModel = contactService.createContact(contactModel);
+        
+        assertThat(contactModel, is(notNullValue()));
         assertThat(contactModel.getId(), equalTo(1l));
         assertThat(contactModel.getBuildingNumber(), equalTo("89"));
         assertThat(contactModel.getApartmentNumber(), equalTo("2.01.2"));
@@ -46,34 +48,10 @@ public class ContactServiceTests {
         assertThat(contactModel.getPhone(), equalTo("+4917823456178"));
         assertThat(contactModel.getMobile(), equalTo("+94779987591"));
         assertThat(contactModel.getFax(), equalTo("+6790281799208"));
-    }
-
-    @Test
-    public void mapContact() {
-        ContactModel contactModel = getContactModel();
-        Contact contact = contactService.map(contactModel);
-        assertThat(contact.getId(), equalTo(1l));
-        assertThat(contact.getBuildingNumber(), equalTo("89"));
-        assertThat(contact.getApartmentNumber(), equalTo("2.01.2"));
-        assertThat(contact.getStreet(), equalTo("Wimbelton strasse"));
-        assertThat(contact.getCity(), equalTo("Colombo"));
-        assertThat(contact.getState(), equalTo("Baden"));
-        assertThat(contact.getPostalCode(), equalTo("78311"));
-        assertThat(contact.getCountry(), equalTo("LK"));
-        assertThat(contact.getPhone(), equalTo("+4917823456178"));
-        assertThat(contact.getMobile(), equalTo("+94779987591"));
-        assertThat(contact.getFax(), equalTo("+6790281799208"));
-    }
-
-    @Test
-    public void createContact() {
-        ContactModel contactModel = getContactModel();
-        contactModel = contactService.createContact(contactModel);
-        assertThat(contactModel, is(notNullValue()));
         verify(contactRepository, times(1)).save(any());
     }
 
-    private Contact getContact() {
+    private static Contact getContact() {
         Contact contact = new Contact();
         contact.setId(1l);
         contact.setCreatedOn(OffsetDateTime.now());
@@ -92,7 +70,7 @@ public class ContactServiceTests {
         return contact;
     }
 
-    private ContactModel getContactModel() {
+    private static ContactModel getContactModel() {
         ContactModel contactModel = new ContactModel();
         contactModel.setId(1l);
         contactModel.setBuildingNumber("89");
