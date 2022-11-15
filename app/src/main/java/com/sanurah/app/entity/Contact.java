@@ -7,11 +7,20 @@ import javax.persistence.Table;
 @Table(name = "contacts")
 public class Contact extends Address {
 
+    private String email;
     private String phone;
     private String mobile;
     private String fax;
 
     public Contact() {
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPhone() {
