@@ -17,8 +17,9 @@ import {MatGridListModule} from "@angular/material/grid-list";
 import {MatIconModule} from "@angular/material/icon";
 import {EmployeeComponent} from './employee/employee.component';
 import {MatToolbarModule} from "@angular/material/toolbar";
-import { NavbarComponent } from './navbar/navbar.component';
-import { EmployeesComponent } from './employees/employees.component';
+import {NavbarComponent} from './navbar/navbar.component';
+import {EmployeesComponent} from './employees/employees.component';
+import {MatMenuModule} from "@angular/material/menu";
 
 @NgModule({
   declarations: [AppComponent, AuthComponent, HomeComponent, EmployeeComponent, NavbarComponent, EmployeesComponent],
@@ -37,6 +38,7 @@ import { EmployeesComponent } from './employees/employees.component';
     MatIconModule,
     FormsModule,
     MatToolbarModule,
+    MatMenuModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
